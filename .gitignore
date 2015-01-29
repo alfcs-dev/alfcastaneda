@@ -26,3 +26,8 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+#Archivos de sublime
+.json
+.sublime-project
+.sublime-workspace
