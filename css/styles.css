@@ -1,0 +1,202 @@
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Raleway'), url(http://fonts.gstatic.com/s/raleway/v9/IczWvq5y_Cwwv_rBjOtT0w.woff) format('woff');
+}
+
+
+html, body {	height: 100%;	background-color: #333333;	}
+
+body{	position: relative;	font-family: 'Raleway', sans-serif;}
+
+.navbar-default {	background-color: #444444;	border-color: #444444; }
+.menu{	display:none; color: white;}
+
+#principal{
+	width: 100%; height: 100%;
+	background: url('../imagenes/back-pers.jpg');  
+	background-position: center; 
+	background-attachment: fixed;
+	position:fixed;
+	text-align: center;
+}
+
+#presentacion {
+	color: white;
+	left: -15px;
+	position: fixed;
+	top: 48%;
+	width: 100%;
+}
+#light-desc{
+	margin:20px 0px; 
+}
+
+.btn-info{	background-color: #404b69; 	border-color: #404b69;	}
+
+.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open > .dropdown-toggle.btn-info {
+	background-color: #333333;
+	border-color: #333333;
+	color: #ffffff;
+}
+
+#about, #educacion { 
+	box-shadow: 0 0 100px rgba(0, 0, 0, 1) inset;
+	height: 600px;
+	top: 100%;
+	width: 100%;
+	color: #FFFFFF;
+	position:relative;
+	
+}
+
+#about{	background-color: #333333;  padding-top: 80px;}
+
+.titulos h2, .titulos h2 {
+	font-style: italic;
+	margin-left: 15px;
+	margin-top: 10px
+}
+
+.well			{	background-color: #444444;	}
+
+.about 		{	font-size: 18px;	}
+
+.about a	{	color:white;	}
+
+
+
+.bienvenida		{	font-style: italic;	margin-top: -8px; text-align:center;}
+
+.info-personal 	{  margin: 10px auto;  width: 75%;  max-height:  500px;}
+
+#educacion	{	background-color: rgb(12, 86, 147); padding-top: 55px;}
+
+#datos-edu	{	width: 75%;	text-align:center}
+#mod-term{font-size: 20px; margin-bottom: 10px; margin-top: 22px;}
+.p-ing{color:#f62b00; text-align:center;}
+#p1-ing{margin-bottom: 0px;}
+
+.unam{color: gold; text-align:center;}
+#redes		{ position:fixed; z-index:10; right:0; top: 65px;}
+
+.fb, .tw, .ldn, .gp, .skype, .mail	{ 	width:	64px;	height: 64px;	margin-right: 3px;	border-radius: 50%;}
+
+.tw:hover, .ldn:hover, .gp:hover, .skype:hover, .mail:hover{	background-color:#050505;}
+.fb:hover { background-color: #FFFFFF; }
+.mail		{		background: url('../imagenes/_0000_Mail.png');	}
+.fb		{ 		background: url('../imagenes/fb.png'); 				}
+.tw		{		background: url('../imagenes/twitter.png');			}
+.ldn		{		background: url('../imagenes/linkedin.png');		}
+.gp		{		background: url('../imagenes/g+.png');				}
+.skype	{		background: url('../imagenes/skype.png');			}	
+
+
+#habilidades{
+	background: url('../imagenes/sillas.jpg');  
+	background-position: center; 
+	background-attachment: fixed;
+	box-shadow: 0 0 100px rgba(0, 0, 0, 1) inset; 
+	height: 100%;
+	top: 100%;
+	width: 100%;
+	color: #FFFFFF;
+	padding-top: 0px;
+	position:relative;
+} 
+.tit-hab{position: absolute;width: 225px; margin-top:40px;}
+
+#habilidades .row {  height: 100%;  margin: 0;}
+
+.programming{ perspective: 1000;	height: 100%;	background: rgba(255,255,255, 0.65); padding:0; margin:0;}
+
+	/* flip the pane when hovered */
+/*.programming:hover .skills, .programming.hover .skills {	transform: rotateY(180deg);}*/
+
+/*.skills{	height: 100%; width: 95%; position: absolute; display: table; transition: 0.6s; transform-style: preserve-3d; cursor: pointer;}*/
+
+.skills {	transition: 0.6s;	transform-style: preserve-3d;	position: relative; height:100%; width: 100%;   }
+
+
+
+
+.front, .back {
+	width: 100%;
+	height: 100%;
+	display: table;
+	
+}
+
+/* flip speed goes here */
+
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+	cursor:pointer;
+}
+
+.front :hover{
+	text-decoration: underline;
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+	background:rgba(0,0,0, 0.5);
+	padding-top:60px;
+}
+
+.front > h1, .back > h1 {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  color: #000000;
+  font-size: 45px;
+  font-weight: bold;
+  font-style: italic;
+  
+}
+
+.progress {
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+  height: 40px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+  color: #fff;
+  float: left;
+  font-size: 25px;
+  height: 100%;
+  line-height: 20px;
+  padding-top: 10px;
+  text-align: center;
+  transition: width 0.6s ease 0s;
+  width: 0;
+}
+#barra-skills{margin-left: -20px; margin-right: 0; padding: 0;}
+
+.barras{ width: 85%;}
+#other-skills{height: 100%; padding:0;}
+
+#languages{	height: 50%;	background: rgba(0,0,0, 0.35);}
+
+#otros{	height: 50%;	background: rgba(125,125,125, 0.45);}
+
