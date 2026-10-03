@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from './Section.astro';
+import { getCV, type Locale } from '../lib/cv';
+import { formatRange, t } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const cv = getCV(locale);
+const s = t(locale);
+const { basics } = cv;
+---
+
+<Base locale={locale} title={`${basics.name} · CV`} description={basics.headline}>
+  <main class="mx-auto max-w-3xl space-y-10 px-4 py-12 sm:px-6 sm:py-20 print:max-w-none print:space-y-5 print:p-0">
+    <header class="space-y-4">
+      <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">{basics.name}</h1>
+      <p class="max-w-2xl text-lg text-muted print:text-base">{basics.headline}</p>
+      <ul class="flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted">
+        <li>{basics.location}</li>
+        <li><a href={`mailto:${basics.email}`}>{basics.email}</a></li>
+        {
+          basics.links.map((l) => (
+            <li>
+              <a href={l.url} rel="me">
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <button
+        type="button"
+        onclick="window.print()"
+        class="no-print cursor-pointer rounded-md border border-border bg-surface px-3 py-1.5 text-sm transition-colors hover:border-accent"
+      >
+        {s.print}
+      </button>
+    </header>
+
+    <Section title={s.about}>
+      <div class="max-w-2xl space-y-4 leading-relaxed print:space-y-2">
+        {cv.about.map((p) => <p>{p}</p>)}
+      </div>
+    </Section>
+
+    <Section title={s.experience}>
+      <div class="space-y-10 print:space-y-4">
+        {
+          cv.work.map((job) => (
+            <article>
+              <div class="flex flex-col gap-x-4 sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 class="font-semibold">
+                  {job.position} <span class="font-normal text-muted">· {job.company}</span>
+                </h3>
+                <p class="shrink-0 text-sm text-muted tabular-nums">
+                  {formatRange(job.start, job.end, locale)} · {job.location}
+                </p>
+              </div>
+              {job.summary && <p class="mt-1 text-sm text-muted italic">{job.summary}</p>}
+              <ul class="mt-3 list-disc space-y-1.5 pl-5 leading-relaxed marker:text-accent print:mt-1.5 print:space-y-0.5">
+                {job.highlights.map((h) => <li>{h}</li>)}
+              </ul>
+              {job.stack && (
+                <ul class="mt-3 flex flex-wrap gap-1.5 print:mt-1.5">
+                  {job.stack.map((tech) => (
+                    <li class="rounded border border-border px-2 py-0.5 text-xs text-muted">{tech}</li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          ))
+        }
+      </div>
+    </Section>
+
+    <Section title={s.skills}>
+      <dl class="grid gap-x-6 gap-y-3 sm:grid-cols-[12rem_1fr]">
+        {
+          cv.skills.map((g) => (
+            <>
+              <dt class="font-medium">{g.group}</dt>
+              <dd class="text-muted">{g.items.join(' · ')}</dd>
+            </>
+          ))
+        }
+      </dl>
+    </Section>
+
+    <div class="grid gap-10 sm:grid-cols-2 print:grid-cols-2 print:gap-5">
+      <Section title={s.education}>
+        {
+          cv.education.map((e) => (
+            <div>
+              <p class="font-medium">{e.degree}</p>
+              <p class="text-muted">{e.institution}</p>
+              <p class="text-sm text-muted tabular-nums">{formatRange(e.start, e.end, locale)}</p>
+            </div>
+          ))
+        }
+      </Section>
+      <Section title={s.languages}>
+        <ul class="space-y-1">
+          {
+            cv.languages.map((l) => (
+              <li>
+                <span class="font-medium">{l.language}</span> <span class="text-muted">· {l.level}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </Section>
+    </div>
+  </main>
+</Base>

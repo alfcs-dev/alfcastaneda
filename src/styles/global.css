@@ -1,0 +1,59 @@
+@import 'tailwindcss';
+
+/* Color tokens: light by default, dark via system preference. */
+@theme {
+  --color-bg: #fbfbf9;
+  --color-surface: #ffffff;
+  --color-text: #1c1c1a;
+  --color-muted: #5f5e58;
+  --color-border: #e4e3dd;
+  --color-accent: #b4232c;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #131312;
+    --color-surface: #1b1b19;
+    --color-text: #ecebe6;
+    --color-muted: #a3a29b;
+    --color-border: #2e2e2b;
+    --color-accent: #f0646c;
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+  body {
+    @apply bg-bg text-text font-sans antialiased;
+  }
+  a {
+    @apply underline decoration-border underline-offset-4 transition-colors hover:decoration-accent;
+  }
+}
+
+/* Printing the page gives a clean one-column PDF CV. */
+@media print {
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #000000;
+    --color-muted: #444444;
+    --color-border: #cccccc;
+    --color-accent: #000000;
+  }
+  @page {
+    margin: 14mm 16mm;
+  }
+  html {
+    font-size: 12px;
+  }
+  .no-print {
+    display: none !important;
+  }
+  article {
+    break-inside: avoid;
+  }
+}
