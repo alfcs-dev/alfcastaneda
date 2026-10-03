@@ -18,17 +18,29 @@ const work = z.object({
   summary: z.string().optional(),
   highlights: z.array(z.string()).min(1),
   stack: z.array(z.string()).optional(),
+  // Compact roles are listed under "Earlier career" with title and dates only.
+  compact: z.boolean().optional(),
+});
+
+const caseStudy = z.object({
+  org: z.string(),
+  period: z.string().optional(),
+  title: z.string(),
+  description: z.string(),
+  outcome: z.string(),
 });
 
 export const cvSchema = z.object({
   basics: z.object({
     name: z.string(),
+    eyebrow: z.string(),
     headline: z.string(),
     location: z.string(),
     email: z.email(),
     links: z.array(link),
   }),
   about: z.array(z.string()).min(1),
+  caseStudies: z.array(caseStudy),
   work: z.array(work).min(1),
   education: z.array(
     z.object({

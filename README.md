@@ -20,7 +20,16 @@ All CV content lives in [`src/data/cv.en.json`](src/data/cv.en.json). The page i
 - The shape is defined with Zod in [`src/lib/cv.ts`](src/lib/cv.ts). If a field is missing or invalid
   (for example a date not in `YYYY-MM` format), the build fails, so mistakes never reach the live site.
 - A job without `end` is shown as current ("Present").
-- The "Print / Save as PDF" button uses a print stylesheet, so the browser produces a clean PDF CV.
+- Jobs with `"compact": true` are listed under "Earlier career" with title and dates only.
+- `caseStudies` feed the "Selected work" section (title, description and outcome).
+- The "Download CV" button uses a print stylesheet, so the browser produces a clean PDF CV.
+
+## Design
+
+- Fonts are self-hosted with Fontsource: Instrument Serif (headings), Instrument Sans (text), JetBrains Mono (dates, labels).
+- Colors are tokens in [`src/styles/global.css`](src/styles/global.css). Change `--color-accent` and
+  `--color-accent-soft` (light and dark) to change the accent color.
+- Light/dark theme follows the system setting until the visitor uses the toggle; the choice is remembered.
 
 ## Languages
 

@@ -1,8 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
 import Section from './Section.astro';
 import { getCV, type Locale } from '../lib/cv';
-import { formatRange, t } from '../lib/i18n';
+import { formatRange, formatYears, t } from '../lib/i18n';
 
 interface Props {
   locale: Locale;
@@ -12,107 +13,215 @@ const { locale } = Astro.props;
 const cv = getCV(locale);
 const s = t(locale);
 const { basics } = cv;
+
+const [firstName, ...rest] = basics.name.split(' ');
+const lastName = rest.join(' ');
+const current = cv.work.find((job) => !job.end);
+const mainWork = cv.work.filter((job) => !job.compact);
+const earlierWork = cv.work.filter((job) => job.compact);
+const year = new Date().getFullYear();
+
+const navLinks = [
+  { href: '#about', label: s.about },
+  { href: '#work', label: s.workNav },
+  { href: '#experience', label: s.experience },
+  { href: '#skills', label: s.skills },
+  { href: '#contact', label: s.contact },
+];
 ---
 
-<Base locale={locale} title={`${basics.name} · CV`} description={basics.headline}>
-  <main class="mx-auto max-w-3xl space-y-10 px-4 py-12 sm:px-6 sm:py-20 print:max-w-none print:space-y-5 print:p-0">
-    <header class="space-y-4">
-      <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">{basics.name}</h1>
-      <p class="max-w-2xl text-lg text-muted print:text-base">{basics.headline}</p>
-      <ul class="flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted">
-        <li>{basics.location}</li>
-        <li><a href={`mailto:${basics.email}`}>{basics.email}</a></li>
-        {
-          basics.links.map((l) => (
-            <li>
-              <a href={l.url} rel="me">
-                {l.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      <button
-        type="button"
-        onclick="window.print()"
-        class="no-print cursor-pointer rounded-md border border-border bg-surface px-3 py-1.5 text-sm transition-colors hover:border-accent"
-      >
-        {s.print}
-      </button>
-    </header>
+<Base locale={locale} title={`${basics.name} · ${basics.eyebrow}`} description={basics.headline}>
+  <Nav name={basics.name} links={navLinks} toggleLabel={s.toggleTheme} />
 
-    <Section title={s.about}>
-      <div class="max-w-2xl space-y-4 leading-relaxed print:space-y-2">
+  <main id="top" class="mx-auto max-w-5xl px-4 sm:px-6 print:max-w-none print:px-0">
+    <!-- Hero -->
+    <section class="flex min-h-[calc(100svh-4rem)] flex-col justify-center py-20 print:min-h-0 print:py-0">
+      <p class="font-mono text-xs tracking-[0.2em] text-accent uppercase">{basics.eyebrow}</p>
+      <h1 class="mt-6 font-serif text-6xl leading-[0.95] tracking-tight sm:text-8xl print:mt-2 print:text-5xl">
+        {firstName}{' '}<em class="text-accent">{lastName}</em>
+      </h1>
+      <p class="mt-8 max-w-2xl text-xl leading-relaxed text-muted sm:text-2xl print:mt-3 print:text-base">
+        {basics.headline}
+      </p>
+      {
+        current && (
+          <p class="mt-6 font-mono text-sm text-muted print:hidden">
+            <span class="mr-2 inline-block size-2 rounded-full bg-accent align-middle" />
+            {s.currently}: {current.position} {s.at} {current.company}
+          </p>
+        )
+      }
+      <div class="no-print mt-10 flex flex-wrap gap-3">
+        <a href="#contact" class="rounded-full bg-accent px-6 py-3 text-sm font-medium text-on-accent no-underline transition-opacity hover:opacity-90">
+          {s.getInTouch}
+        </a>
+        <button type="button" onclick="window.print()" class="cursor-pointer rounded-full border border-border px-6 py-3 text-sm font-medium transition-colors hover:border-accent">
+          {s.downloadCv}
+        </button>
+      </div>
+      <ul class="mt-3 hidden flex-wrap gap-x-5 text-sm print:flex">
+        <li>{basics.location}</li>
+        <li>{basics.email}</li>
+        {basics.links.map((l) => <li>{l.url.replace(/^https:\/\/(www\.)?/, '')}</li>)}
+      </ul>
+    </section>
+
+    <Section id="about" title={s.about}>
+      <div class="max-w-3xl space-y-6 text-lg leading-relaxed sm:text-xl print:space-y-2 print:text-sm">
         {cv.about.map((p) => <p>{p}</p>)}
       </div>
     </Section>
 
-    <Section title={s.experience}>
-      <div class="space-y-10 print:space-y-4">
+    <Section id="work" title={s.work} note={s.workNote}>
+      <div class="divide-y divide-border">
         {
-          cv.work.map((job) => (
-            <article>
-              <div class="flex flex-col gap-x-4 sm:flex-row sm:items-baseline sm:justify-between">
-                <h3 class="font-semibold">
-                  {job.position} <span class="font-normal text-muted">· {job.company}</span>
-                </h3>
-                <p class="shrink-0 text-sm text-muted tabular-nums">
-                  {formatRange(job.start, job.end, locale)} · {job.location}
+          cv.caseStudies.map((cs) => (
+            <article class="grid gap-6 py-8 first:pt-0 md:grid-cols-[1fr_15rem] md:gap-12 print:py-2">
+              <div>
+                <p class="font-mono text-xs text-muted">
+                  {cs.org}
+                  {cs.period && ` · ${cs.period}`}
                 </p>
+                <h3 class="mt-2 font-serif text-3xl leading-tight print:text-xl">{cs.title}</h3>
+                <p class="mt-3 leading-relaxed text-muted">{cs.description}</p>
               </div>
-              {job.summary && <p class="mt-1 text-sm text-muted italic">{job.summary}</p>}
-              <ul class="mt-3 list-disc space-y-1.5 pl-5 leading-relaxed marker:text-accent print:mt-1.5 print:space-y-0.5">
-                {job.highlights.map((h) => <li>{h}</li>)}
-              </ul>
-              {job.stack && (
-                <ul class="mt-3 flex flex-wrap gap-1.5 print:mt-1.5">
-                  {job.stack.map((tech) => (
-                    <li class="rounded border border-border px-2 py-0.5 text-xs text-muted">{tech}</li>
-                  ))}
-                </ul>
-              )}
+              <div class="md:pt-6">
+                <p class="font-mono text-[0.7rem] tracking-[0.2em] text-accent uppercase">{s.outcome}</p>
+                <p class="mt-2 font-medium leading-snug">{cs.outcome}</p>
+              </div>
             </article>
           ))
         }
       </div>
     </Section>
 
-    <Section title={s.skills}>
-      <dl class="grid gap-x-6 gap-y-3 sm:grid-cols-[12rem_1fr]">
+    <Section id="experience" title={s.experience} note={s.experienceNote}>
+      <div class="divide-y divide-border">
         {
-          cv.skills.map((g) => (
-            <>
-              <dt class="font-medium">{g.group}</dt>
-              <dd class="text-muted">{g.items.join(' · ')}</dd>
-            </>
+          mainWork.map((job) => (
+            <article class="grid gap-4 py-10 first:pt-0 md:grid-cols-[13rem_1fr] md:gap-12 print:py-3">
+              <div>
+                <h3 class="font-serif text-3xl leading-tight print:text-xl">{job.company}</h3>
+                <p class="mt-1 font-mono text-xs text-muted">{formatYears(job.start, job.end, locale)}</p>
+              </div>
+              <div>
+                <p class="font-semibold">{job.position}</p>
+                <p class="mt-1 font-mono text-xs text-muted">
+                  {formatRange(job.start, job.end, locale)} · {job.location}
+                </p>
+                {job.summary && <p class="mt-3 text-muted">{job.summary}</p>}
+                <ul class="mt-4 space-y-2.5 leading-relaxed print:mt-2 print:space-y-1">
+                  {job.highlights.map((h) => (
+                    <li class="relative pl-5 before:absolute before:top-[0.7em] before:left-0 before:size-1.5 before:rounded-full before:bg-accent">
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+                {job.stack && (
+                  <ul class="mt-5 flex flex-wrap gap-2 print:mt-2">
+                    {job.stack.map((tech) => (
+                      <li class="rounded-full bg-accent-soft px-3 py-1 font-mono text-xs text-text print:border print:border-border print:px-2 print:py-0">
+                        {tech}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </article>
           ))
         }
-      </dl>
+      </div>
+
+      {
+        earlierWork.length > 0 && (
+          <div class="mt-12 print:mt-4">
+            <h3 class="font-mono text-xs tracking-[0.2em] text-muted uppercase">{s.earlierCareer}</h3>
+            <ul class="mt-4 divide-y divide-border border-y border-border">
+              {earlierWork.map((job) => (
+                <li class="grid grid-cols-[1fr_auto] gap-x-6 gap-y-1 py-4 sm:grid-cols-[13rem_1fr_auto] sm:items-baseline sm:gap-12 print:py-1.5">
+                  <span class="font-serif text-xl">{job.company}</span>
+                  <span class="order-last col-span-2 text-sm text-muted sm:order-none sm:col-span-1">
+                    {job.position} · {job.location}
+                  </span>
+                  <span class="text-right font-mono text-xs text-muted">{formatYears(job.start, job.end, locale)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
     </Section>
 
-    <div class="grid gap-10 sm:grid-cols-2 print:grid-cols-2 print:gap-5">
-      <Section title={s.education}>
+    <Section id="skills" title={s.skills}>
+      <div class="grid gap-10 sm:grid-cols-2 print:grid-cols-2 print:gap-4">
         {
-          cv.education.map((e) => (
+          cv.skills.map((g) => (
             <div>
-              <p class="font-medium">{e.degree}</p>
-              <p class="text-muted">{e.institution}</p>
-              <p class="text-sm text-muted tabular-nums">{formatRange(e.start, e.end, locale)}</p>
+              <h3 class="font-mono text-xs tracking-[0.2em] text-accent uppercase">{g.group}</h3>
+              <p class="mt-3 leading-relaxed">{g.items.join(' · ')}</p>
             </div>
           ))
         }
-      </Section>
-      <Section title={s.languages}>
-        <ul class="space-y-1">
+        <div>
+          <h3 class="font-mono text-xs tracking-[0.2em] text-accent uppercase">{s.languages}</h3>
+          <ul class="mt-3 space-y-1">
+            {
+              cv.languages.map((l) => (
+                <li>
+                  {l.language} <span class="text-muted">· {l.level}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-mono text-xs tracking-[0.2em] text-accent uppercase">{s.education}</h3>
           {
-            cv.languages.map((l) => (
+            cv.education.map((e) => (
+              <div class="mt-3">
+                <p>{e.degree}</p>
+                <p class="text-muted">{e.institution}</p>
+                <p class="font-mono text-xs text-muted">{formatYears(e.start, e.end, locale)}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </Section>
+  </main>
+
+  <section id="contact" class="no-print reveal mt-8 bg-accent-soft">
+    <div class="mx-auto grid max-w-5xl gap-12 px-4 py-24 sm:px-6 md:grid-cols-[1fr_auto] md:items-end">
+      <div>
+        <h2 class="font-serif text-6xl leading-none tracking-tight sm:text-8xl">
+          {s.contactTitle}<span class="text-accent">.</span>
+        </h2>
+        <p class="mt-6 max-w-md text-lg text-muted">{s.contactText}</p>
+        <a href={`mailto:${basics.email}`} class="mt-8 inline-block font-serif text-3xl break-all decoration-accent sm:text-5xl">
+          {basics.email}
+        </a>
+      </div>
+      <div>
+        <h3 class="font-mono text-xs tracking-[0.2em] text-muted uppercase">{s.elsewhere}</h3>
+        <ul class="mt-4 space-y-2">
+          {
+            basics.links.map((l) => (
               <li>
-                <span class="font-medium">{l.language}</span> <span class="text-muted">· {l.level}</span>
+                <a href={l.url} rel="me" class="font-medium">
+                  {l.label}
+                </a>
               </li>
             ))
           }
         </ul>
-      </Section>
+      </div>
     </div>
-  </main>
+  </section>
+
+  <footer class="no-print border-t border-border">
+    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-8 text-sm text-muted sm:px-6">
+      <p>© {year} {basics.name} · {basics.location}</p>
+      <a href="#top">{s.backToTop}</a>
+    </div>
+  </footer>
 </Base>
