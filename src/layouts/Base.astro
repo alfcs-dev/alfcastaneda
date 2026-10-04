@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+import type { Locale } from '../lib/cv';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+}
+
+const { locale, title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content="#f7f7f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1110" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      // Set the theme before first paint to avoid a flash of the wrong colors.
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch (e) {}
+        var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

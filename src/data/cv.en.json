@@ -1,0 +1,219 @@
+{
+  "basics": {
+    "name": "Alfredo Castañeda Sierra",
+    "eyebrow": "Engineering leader · Front end",
+    "headline": "Senior Software Engineer leading front-end teams. Looking for Engineering Manager or Tech Lead roles.",
+    "location": "Mexico City, Mexico",
+    "email": "ac@alfcs.dev",
+    "links": [
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/alfcastaneda"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/alfcs-dev"
+      }
+    ]
+  },
+  "about": [
+    "I'm a front-end engineer with more than ten years of experience building web products in Mexico City and Berlin, currently at Netflix. For the last few years I've been leading a team of five engineers in practice, and that has become the part of the job I enjoy most: seeing people grow.",
+    "Everyone is driven by something different. I like finding what that is and helping people build on it: connecting them with other teams, building trust and confidence, and making sure they see the value of their work. Some of the engineers I work with want to go deeper technically than I do, and I want to help them get there. That's why I'm looking for an Engineering Manager or Tech Lead role."
+  ],
+  "caseStudies": [
+    {
+      "org": "Netflix",
+      "title": "One shared library for talent records",
+      "description": "Owned the architecture, much of the implementation and the launch communication for the Studio Talent Data components: unified search, record display and creation, built once and shared across the organization.",
+      "outcome": "Used in 6+ apps, with one set of data rules and UX everywhere."
+    },
+    {
+      "org": "Netflix",
+      "title": "Finding the same person twice",
+      "description": "Tools for the data management team to review clusters of similar people: a graph of connections with confidence scores, and tables comparing the titles and roles each record worked on, so duplicates can be merged or removed.",
+      "outcome": "75% fewer duplicate records in one year."
+    },
+    {
+      "org": "Wayfair",
+      "period": "2019–2021",
+      "title": "Inventory tools for suppliers without automation",
+      "description": "A manual inventory management tool for suppliers that had no automated integration with Wayfair, or were still building trust with it.",
+      "outcome": "Launched to ~100–150 suppliers. Fewer orders failed because of missing stock."
+    }
+  ],
+  "work": [
+    {
+      "company": "Netflix",
+      "position": "Senior Software Engineer",
+      "location": "Mexico City",
+      "start": "2022-01",
+      "summary": "Studio talent data: records of the people who work on Netflix productions, such as actors, directors, producers and animators.",
+      "highlights": [
+        "Tech lead in practice for a team of 5 engineers: the bridge between product, design and engineering. I prioritize and assign work, and help review technical decisions.",
+        "Mentor 4–5 engineers, through a formal mentorship program and informally, supporting them through promotions and turnarounds.",
+        "Owned the architecture, much of the implementation and the launch communication for the Studio Talent Data components: a shared library for searching, displaying and creating talent records, used in 6+ apps across the organization.",
+        "Built, together with the data management team, tools to find and merge duplicate people: clusters of similar records, a graph of connections with confidence scores, and tables comparing their titles and roles. Together we reduced duplicate records by 75% in one year.",
+        "Replaced search and creation flows repeated across 6 apps with shared micro front-end modules (Webpack Module Federation). This removed 2k+ lines of code, kept every app on the same data rules and UX, and reduced bad data entering the talent services."
+      ],
+      "stack": [
+        "TypeScript",
+        "React",
+        "Vite",
+        "CSS Modules",
+        "Hawkins design system"
+      ]
+    },
+    {
+      "company": "Wayfair",
+      "position": "Software Engineer",
+      "location": "Berlin",
+      "start": "2019-11",
+      "end": "2021-12",
+      "summary": "Inventory tools for suppliers and warehouses.",
+      "highlights": [
+        "Owned the front end on a full-stack team of 8–10 engineers, and also contributed to PHP and Java services.",
+        "Launched the new inventory management tool to ~100–150 suppliers that didn't have automated integrations, or were still building trust with Wayfair. Fewer orders failed because of missing inventory, so Wayfair's trust in those suppliers grew.",
+        "Moved tools built with custom JS frameworks and jQuery to React, removed duplicated code, and redesigned data-heavy tables, using Web Workers to keep large updates fast."
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "GraphQL",
+        "PHP",
+        "Java",
+        "REST"
+      ]
+    },
+    {
+      "company": "Websitebutler GmbH / Sitejet",
+      "position": "Sr. UI Software Engineer",
+      "location": "Berlin",
+      "start": "2018-02",
+      "end": "2019-10",
+      "summary": "Website builder: first used by in-house designers, then launched as Sitejet so small businesses could build their own sites from those templates.",
+      "highlights": [
+        "Led and implemented the migration of the main CMS from jQuery to React and Vue, including choosing the new technologies. About 50% was migrated when I left.",
+        "Built a project management tool for businesses and agencies to track site progress, launches and billing, and to buy and manage domains, all connected to the design CMS."
+      ],
+      "stack": [
+        "React",
+        "Vue",
+        "Webpack",
+        "jQuery"
+      ]
+    },
+    {
+      "company": "AppLift",
+      "position": "Senior Front End Engineer",
+      "location": "Berlin",
+      "start": "2016-11",
+      "end": "2018-01",
+      "summary": "Mobile advertising platform.",
+      "highlights": [
+        "Helped build DataLift 360, the dashboard and platform where advertisers managed budgets and campaigns.",
+        "Built visualizations of campaign performance that helped customers manage their budgets better."
+      ],
+      "stack": [
+        "AngularJS",
+        "CoffeeScript",
+        "Sass",
+        "Gulp",
+        "Webpack"
+      ],
+      "compact": true
+    },
+    {
+      "company": "Globant",
+      "position": "Sr. Front End / Web UI Developer",
+      "location": "Mexico City",
+      "start": "2016-01",
+      "end": "2016-10",
+      "highlights": [
+        "Built a single workspace for Grey Advertising to track one client's campaigns across different locations: an AngularJS / Angular Material SPA with a Node.js bridge to the Box API (JWT auth).",
+        "Worked with several Autodesk teams to deliver a new version of their application.",
+        "Mentored developers on the team to reach sprint and project goals."
+      ],
+      "compact": true
+    },
+    {
+      "company": "NRM Comunicaciones",
+      "position": "Web Developer",
+      "location": "Mexico City",
+      "start": "2012-07",
+      "end": "2016-01",
+      "highlights": [
+        "Turned client designs into websites and Drupal-based content management systems, from mockup to launch.",
+        "Built back-end components connecting sites to external web services."
+      ],
+      "compact": true
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Nacional Autónoma de México (UNAM)",
+      "degree": "B.Sc. Computer Engineering",
+      "location": "Mexico City",
+      "start": "2004-08",
+      "end": "2009-12"
+    }
+  ],
+  "skills": [
+    {
+      "group": "Leadership",
+      "items": [
+        "Technical leadership",
+        "Mentoring",
+        "Planning & prioritization",
+        "Cross-team collaboration",
+        "Requirements analysis"
+      ]
+    },
+    {
+      "group": "Front end",
+      "items": [
+        "TypeScript",
+        "JavaScript",
+        "React",
+        "Vue",
+        "HTML",
+        "CSS / Sass",
+        "CSS Modules"
+      ]
+    },
+    {
+      "group": "Architecture & tooling",
+      "items": [
+        "Micro front-ends",
+        "Module Federation",
+        "Design systems",
+        "GraphQL",
+        "Vite",
+        "Vitest",
+        "Turborepo",
+        "Webpack"
+      ]
+    },
+    {
+      "group": "Back end & cloud",
+      "items": [
+        "Node.js",
+        "REST",
+        "AWS (Lambda)"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Spanish",
+      "level": "Native"
+    },
+    {
+      "language": "English",
+      "level": "Professional"
+    },
+    {
+      "language": "German",
+      "level": "Intermediate (reading and writing stronger than speaking)"
+    }
+  ]
+}
