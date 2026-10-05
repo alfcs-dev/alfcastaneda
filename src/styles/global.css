@@ -9,13 +9,13 @@
  * with the toggle, or when their system prefers dark and they haven't chosen.
  */
 @theme {
-  --color-bg: #f7f7f3;
-  --color-surface: #ffffff;
+  --color-bg: #efeee8;
+  --color-surface: #f7f6f2;
   --color-text: #161816;
   --color-muted: #595e59;
-  --color-border: #dfe1d9;
+  --color-border: #d9d8cf;
   --color-accent: #1d6a50;
-  --color-accent-soft: #e2eee7;
+  --color-accent-soft: #dfe9e2;
   --color-on-accent: #ffffff;
 
   --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
