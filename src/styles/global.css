@@ -86,10 +86,49 @@
 }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
+    /* Longhands on purpose: the minifier would fold a shorthand into
+       `animation: … view()`, which browsers reject as invalid. */
     .reveal {
-      animation: reveal linear both;
+      animation-name: reveal;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+/*
+ * Hero motion (CSS only, off for reduced motion and print):
+ * - on load, its lines appear one after another;
+ * - while scrolling to the first section, it fades, rises and shrinks slightly.
+ */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.875rem);
+    filter: blur(4px);
+  }
+}
+@keyframes hero-out {
+  to {
+    opacity: 0.1;
+    transform: translateY(-4rem) scale(0.95);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-in {
+    animation: hero-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 110ms + 120ms);
+  }
+  @supports (animation-timeline: scroll()) {
+    .hero-content {
+      transform-origin: left center;
+      animation-name: hero-out;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root);
+      animation-range: 0 75svh;
     }
   }
 }
@@ -113,7 +152,9 @@
   html {
     font-size: 12.5px;
   }
-  .reveal {
+  .reveal,
+  .hero-in,
+  .hero-content {
     animation: none !important;
   }
   .no-print {
