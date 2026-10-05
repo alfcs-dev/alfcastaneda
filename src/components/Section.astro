@@ -3,13 +3,14 @@ interface Props {
   id: string;
   title: string;
   note?: string;
+  class?: string;
 }
-const { id, title, note } = Astro.props;
+const { id, title, note, class: className } = Astro.props;
 ---
 
-<section id={id} class="reveal py-16 sm:py-24 print:py-4">
-  <div class="mb-10 flex flex-col gap-3 border-b border-text pb-4 sm:flex-row sm:items-end sm:justify-between print:mb-4 print:pb-1">
-    <h2 class="font-serif text-5xl leading-none tracking-tight sm:text-6xl print:text-3xl">{title}</h2>
+<section id={id} class:list={['reveal py-16 sm:py-24 print:py-3', className]}>
+  <div class="mb-10 flex flex-col gap-3 border-b border-text pb-4 sm:flex-row sm:items-end sm:justify-between print:mb-3 print:pb-1">
+    <h2 class="font-serif text-5xl leading-none tracking-tight sm:text-6xl print:text-2xl">{title}</h2>
     {note && <p class="max-w-xs text-sm text-muted sm:text-right print:hidden">{note}</p>}
   </div>
   <slot />
